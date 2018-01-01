@@ -14,7 +14,7 @@ or
 
 require:
 ```json
-"php": ">=7.0.0",
+"php": ">=5.6.0",
 "nette/nette": ">=2.4.0"
 ```
 
@@ -64,7 +64,7 @@ $vp = $this['VisualPaginator']->getPaginator();
 ...
 protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
 {
-    //$visualPaginator->setPathTemplate(__DIR__.'/VisualPaginator.latte');
+    //$visualPaginator->setPathTemplate(__DIR__.'/templates/VisualPaginator.latte');
     return $visualPaginator;
 }
 ```

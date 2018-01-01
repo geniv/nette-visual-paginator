@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 use Nette\Utils\Paginator;
 use Nette\Application\UI\Control;
@@ -44,7 +44,7 @@ class VisualPaginator extends Control
      *
      * @return Paginator
      */
-    public function getPaginator(): Paginator
+    public function getPaginator()
     {
         if (!$this->paginator) {
             $this->paginator = new Paginator;
@@ -57,9 +57,9 @@ class VisualPaginator extends Control
      * Set template path.
      *
      * @param string $path
-     * @return VisualPaginator
+     * @return $this
      */
-    public function setPathTemplate(string $path): self
+    public function setPathTemplate(string $path)
     {
         $this->pathTemplate = $path;
         return $this;
@@ -110,6 +110,7 @@ class VisualPaginator extends Control
      * Loads state informations.
      *
      * @param array $params
+     * @throws \Nette\Application\BadRequestExceptio
      */
     public function loadState(array $params)
     {
