@@ -110,7 +110,7 @@ class VisualPaginator extends Control
      * Loads state informations.
      *
      * @param array $params
-     * @throws \Nette\Application\BadRequestExceptio
+     * @throws \Nette\Application\BadRequestException
      */
     public function loadState(array $params)
     {
