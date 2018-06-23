@@ -10,7 +10,7 @@
             <li n:class="$step==$paginator->getPage()?active">
                 <a n:href="this, 'page'=>$step">{$step}</a>
             </li>
-            <li n:if="$iterator->getNextValue()>$step+1" class="disabled">
+            <li n:if="$iterator->getNextValue()>$step+1 && $paginator->getItemCount()>10" class="disabled">
                 <span>...</span>
             </li>
         {/foreach}
