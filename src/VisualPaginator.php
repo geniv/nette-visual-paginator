@@ -55,17 +55,6 @@ class VisualPaginator extends Control implements ITemplatePath
 
 
     /**
-     * Set page.
-     *
-     * @param int $page
-     */
-    public function setPage(int $page)
-    {
-        $this->paginator->setPage($page);
-    }
-
-
-    /**
      * Set template path.
      *
      * @param string $path
@@ -117,7 +106,7 @@ class VisualPaginator extends Control implements ITemplatePath
 
 
     /**
-     * Loads state informations.
+     * Load state.
      *
      * @param array $params
      * @throws \Nette\Application\BadRequestException
