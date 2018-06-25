@@ -65,6 +65,7 @@ $vp = $this['VisualPaginator']->getPaginator();
 protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
 {
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
+    $visualPaginator->setOptions(['fullStep'=>10, 'firstPart'=>5, 'lastPart'=>5, 'middleStep'=>2, 'middleFirstStep'=>3, 'middleLastStep'=>3]);
     return $visualPaginator;
 }
 ```
