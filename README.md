@@ -1,6 +1,5 @@
 Visual paginator
 ================
-Paginator component
 
 Installation
 ------------
@@ -14,8 +13,9 @@ or
 
 require:
 ```json
-"php": ">=5.6.0",
-"nette/nette": ">=2.4.0"
+"php": ">=7.0.0",
+"nette/nette": ">=2.4.0",
+"geniv/nette-general-form": ">=1.0.0"
 ```
 
 Include in application
@@ -28,8 +28,6 @@ services:
 
 presenters:
 ```php
-use VisualPaginator;
-...
 /** @var VisualPaginator @inject */
 public $visualPaginator;
 ...
@@ -56,15 +54,17 @@ protected function createComponentVisualPaginator()
     return $this->visualPaginator;
 }
 ```
-and
+
+or
+
 ```php
-use VisualPaginator;
-...
 $vp = $this['VisualPaginator']->getPaginator();
+
 ...
+
 protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
 {
-    //$visualPaginator->setPathTemplate(__DIR__.'/templates/VisualPaginator.latte');
+    //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
     return $visualPaginator;
 }
 ```

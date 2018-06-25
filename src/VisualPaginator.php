@@ -1,5 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
+use GeneralForm\ITemplatePath;
 use Nette\Utils\Paginator;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
@@ -10,7 +11,7 @@ use Nette\Localization\ITranslator;
  *
  * @author  geniv
  */
-class VisualPaginator extends Control
+class VisualPaginator extends Control implements ITemplatePath
 {
     /** @var Paginator */
     private $paginator;
@@ -44,7 +45,7 @@ class VisualPaginator extends Control
      *
      * @return Paginator
      */
-    public function getPaginator()
+    public function getPaginator(): Paginator
     {
         if (!$this->paginator) {
             $this->paginator = new Paginator;
@@ -54,15 +55,24 @@ class VisualPaginator extends Control
 
 
     /**
+     * Set page.
+     *
+     * @param int $page
+     */
+    public function setPage(int $page)
+    {
+        $this->paginator->setPage($page);
+    }
+
+
+    /**
      * Set template path.
      *
      * @param string $path
-     * @return $this
      */
-    public function setPathTemplate(string $path)
+    public function setTemplatePath(string $path)
     {
         $this->pathTemplate = $path;
-        return $this;
     }
 
 
