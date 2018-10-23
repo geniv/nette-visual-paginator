@@ -1,8 +1,8 @@
 <nav n:if="$paginator->getPageCount()>1" class="pagination">
-    <a n:if="!$paginator->isFirst()" n:href="this, 'page'=>$paginator->getPage()-1">{_'paginator-previous'}</a>
+    <a n:if="!$paginator->isFirst()" n:href="this, 'page'=>$paginator->getPage()-1">{_'paginator#previous'}</a>
     {foreach $steps as $step}
         <a n:href="this, 'page'=>$step" n:class="$step==$paginator->getPage()?active">{$step}</a>
         <span n:if="$iterator->getNextValue()>$step+1">...</span>
     {/foreach}
-    <a n:if="!$paginator->isLast()" n:href="this, 'page'=>$paginator->getPage()+1">{_'paginator-next'}</a>
+    <a n:if="!$paginator->isLast()" n:href="this, 'page'=>$paginator->getPage()+1">{_'paginator#next'}</a>
 </nav>
