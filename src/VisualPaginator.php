@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace VisualPaginator;
+
 use GeneralForm\ITemplatePath;
 use Nette\Utils\Paginator;
 use Nette\Application\UI\Control;
@@ -10,6 +12,7 @@ use Nette\Localization\ITranslator;
  * Class VisualPaginator
  *
  * @author  geniv
+ * @package VisualPaginator
  */
 class VisualPaginator extends Control implements ITemplatePath
 {

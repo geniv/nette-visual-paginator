@@ -8,7 +8,7 @@ $ composer require geniv/nette-visual-paginator
 ```
 or
 ```json
-"geniv/nette-visual-paginator": "^1.1"
+"geniv/nette-visual-paginator": "^1.0"
 ```
 
 require:
