@@ -17,7 +17,8 @@ interface IPaginatorRenderer
      * Get steps.
      *
      * @param Paginator $paginator
+     * @param array     $options
      * @return array
      */
-    public function getSteps(Paginator $paginator): array;
+    public function getSteps(Paginator $paginator, array $options = []): array;
 }

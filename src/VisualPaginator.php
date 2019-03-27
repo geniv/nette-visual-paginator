@@ -6,6 +6,8 @@ use GeneralForm\ITemplatePath;
 use Nette\Utils\Paginator;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
+use VisualPaginator\Renderer\BasicRenderer;
+use VisualPaginator\Renderer\IPaginatorRenderer;
 
 
 /**
@@ -26,24 +28,51 @@ class VisualPaginator extends Control implements ITemplatePath
     private $pathTemplate;
     /** @var array */
     private $options;
+    /** @var IPaginatorRenderer */
+    private $paginatorRenderer;
 
 
     /**
      * VisualPaginator constructor.
      *
-     * @param ITranslator|null $translator
+     * @param ITranslator|null        $translator
+     * @param IPaginatorRenderer|null $paginatorRenderer
      */
-    public function __construct(ITranslator $translator = null)
+    public function __construct(ITranslator $translator = null, IPaginatorRenderer $paginatorRenderer = null)
     {
         parent::__construct();
 
         $this->translator = $translator;
+        $this->paginatorRenderer = $paginatorRenderer;
         $this->pathTemplate = __DIR__ . '/VisualPaginator.latte';
     }
 
 
     /**
+     * Get paginator renderer.
+     *
+     * @return IPaginatorRenderer
+     */
+    public function getPaginatorRenderer(): IPaginatorRenderer
+    {
+        return $this->paginatorRenderer;
+    }
+
+
+    /**
+     * Set paginator renderer.
+     *
+     * @param IPaginatorRenderer $paginatorRenderer
+     */
+    public function setPaginatorRenderer(IPaginatorRenderer $paginatorRenderer)
+    {
+        $this->paginatorRenderer = $paginatorRenderer;
+    }
+
+
+    /**
      * Get paginator.
+     * Singleton.
      *
      * @return Paginator
      */
@@ -96,6 +125,12 @@ class VisualPaginator extends Control implements ITemplatePath
         if (isset($options['perPage'])) {
             $paginator->setItemsPerPage($options['perPage']);
         }
+
+        if (!$this->paginatorRenderer) {
+            $this->paginatorRenderer = new BasicRenderer;
+        }
+        // use global options and rewrite with local options
+        $steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
 
         $page = $paginator->getPage();
 

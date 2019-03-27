@@ -27,6 +27,16 @@ services:
     - VisualPaginator
 ```
 
+renderer:
+```php
+BasicRenderer
+1 2 3 4 5 6 7 8 9 10
+
+AdvanceTypeARenderer
+
+AdvanceTypeBRenderer
+```
+
 presenters:
 ```php
 /** @var VisualPaginator @inject */
