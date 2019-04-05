@@ -35,7 +35,8 @@ BasicRenderer
 AdvanceTypeARenderer(['relatedPages'=>3, 'count'=>4])
 1 2 3 4 ... 13 ... 26 ... 38 ... 50
 
-AdvanceTypeBRenderer
+AdvanceTypeBRenderer(['part' => 3, 'middle' => 2])
+1 2 3 ... 48 49 50
 ```
 
 presenters:

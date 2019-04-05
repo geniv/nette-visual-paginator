@@ -13,6 +13,20 @@ use Nette\Utils\Paginator;
  */
 class AdvanceTypeBRenderer implements IPaginatorRenderer
 {
+    /** @var array */
+    private $options = [];
+
+
+    /**
+     * AdvanceTypeARenderer constructor.
+     *
+     * @param array $options
+     */
+    public function __construct(array $options = [])
+    {
+        $this->options = $options;
+    }
+
 
     /**
      * Get steps.
@@ -23,35 +37,23 @@ class AdvanceTypeBRenderer implements IPaginatorRenderer
      */
     public function getSteps(Paginator $paginator, array $options = []): array
     {
-        return range($paginator->getFirstPage(), $paginator->getLastPage());
+        $options = array_merge($this->options, $options);
 
-//
-//        foreach (range(1, 100) as $page) {
-//            $paginator = new Paginator;
-//
-//            $items = range(1, 500);
-//            $paginator->setItemCount(count($items))
-//                ->setItemsPerPage(5)
-//                ->setPage($page);
-//
-////        $option = ['fullStep' => 10, 'firstPart' => 5, 'lastPart' => 5, 'middleStep' => 2, 'middleFirstStep' => 3, 'middleLastStep' => 3];
-//
-//            $part = 3;
-//            $middle = 2;
-//
-//            $min = $part + $middle + 1 + $middle + $part;
-//
-//            if ($min > $paginator->getPageCount()) {
-//                $steps = range($paginator->getFirstPage(), $paginator->getLastPage());
-//            } else {
-//                $steps = range($paginator->getFirstPage(), $part);
-//                if ($page >= $middle && $page <= $paginator->getLastPage() - $middle + 1) {
-//                    $steps = array_merge($steps, range(max($page - $middle, $part + 1), min($page + $middle, $paginator->getLastPage() - $middle - 1)));
-//                }
-//                $steps = array_merge($steps, range($paginator->getLastPage() + 1 - $part, $paginator->getLastPage()));  //OK
-//            }
-//            dump($page . ' : ' . implode(' - ', $steps));
-//        }
+        $part = $options['part'] ?? 3;
+        $middle = $options['middle'] ?? 2;
 
+        $min = $part + $middle + 1 + $middle + $part;
+
+        $page = $paginator->page;
+        if ($min > $paginator->getPageCount()) {
+            $steps = range($paginator->getFirstPage(), $paginator->getLastPage());
+        } else {
+            $steps = range($paginator->getFirstPage(), $part);
+            if ($page >= $middle && $page <= $paginator->getLastPage() - $middle + 1) {
+                $steps = array_merge($steps, range(max($page - $middle, $part + 1), min($page + $middle, $paginator->getLastPage() - $middle - 1)));
+            }
+            $steps = array_merge($steps, range($paginator->getLastPage() + 1 - $part, $paginator->getLastPage()));  //OK
+        }
+        return $steps;
     }
 }

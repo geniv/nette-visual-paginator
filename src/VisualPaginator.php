@@ -119,12 +119,12 @@ class VisualPaginator extends Control implements ITemplatePath
         $template = $this->getTemplate();
         $paginator = $this->getPaginator();
 
-        if (isset($options['count'])) {
-            $paginator->setItemCount($options['count']);
+        if (isset($options['itemCount'])) {
+            $paginator->setItemCount($options['itemCount']);
         }
 
-        if (isset($options['perPage'])) {
-            $paginator->setItemsPerPage($options['perPage']);
+        if (isset($options['itemsPerPage'])) {
+            $paginator->setItemsPerPage($options['itemsPerPage']);
         }
 
         if (!$this->paginatorRenderer) {
