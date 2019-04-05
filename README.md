@@ -32,7 +32,8 @@ renderer (implements `IPaginatorRenderer`):
 BasicRenderer
 1 2 3 4 5 6 7 8 9 10
 
-AdvanceTypeARenderer
+AdvanceTypeARenderer(['relatedPages'=>3, 'count'=>4])
+1 2 3 4 ... 13 ... 26 ... 38 ... 50
 
 AdvanceTypeBRenderer
 ```
@@ -77,7 +78,6 @@ $vp = $this['VisualPaginator']->getPaginator();
 protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
 {
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
-    $visualPaginator->setOptions(['fullStep'=>10, 'firstPart'=>5, 'lastPart'=>5, 'middleStep'=>2, 'middleFirstStep'=>3, 'middleLastStep'=>3]);
     $visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $visualPaginator;
 }
