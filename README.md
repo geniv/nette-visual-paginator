@@ -24,10 +24,10 @@ Include in application
 neon configure:
 ```neon
 services:
-    - VisualPaginator
+    - VisualPaginator\VisualPaginator
 ```
 
-renderer:
+renderer (implements `IPaginatorRenderer`):
 ```php
 BasicRenderer
 1 2 3 4 5 6 7 8 9 10
@@ -62,6 +62,7 @@ public function render...()
 protected function createComponentVisualPaginator()
 {
     //$this->visualPaginator->setPathTemplate(__DIR__.'/VisualPaginator.latte');
+    $this->visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $this->visualPaginator;
 }
 ```
@@ -77,6 +78,7 @@ protected function createComponentVisualPaginator(VisualPaginator $visualPaginat
 {
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
     $visualPaginator->setOptions(['fullStep'=>10, 'firstPart'=>5, 'lastPart'=>5, 'middleStep'=>2, 'middleFirstStep'=>3, 'middleLastStep'=>3]);
+    $visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $visualPaginator;
 }
 ```

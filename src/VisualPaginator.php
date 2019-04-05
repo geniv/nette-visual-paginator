@@ -3,9 +3,10 @@
 namespace VisualPaginator;
 
 use GeneralForm\ITemplatePath;
-use Nette\Utils\Paginator;
+use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
+use Nette\Utils\Paginator;
 use VisualPaginator\Renderer\BasicRenderer;
 use VisualPaginator\Renderer\IPaginatorRenderer;
 
@@ -27,7 +28,7 @@ class VisualPaginator extends Control implements ITemplatePath
     /** @var string path to template */
     private $pathTemplate;
     /** @var array */
-    private $options;
+    private $options = [];
     /** @var IPaginatorRenderer */
     private $paginatorRenderer;
 
@@ -113,7 +114,7 @@ class VisualPaginator extends Control implements ITemplatePath
      * @param array $options
      * @return void
      */
-    public function render(array $options = null)
+    public function render(array $options = [])
     {
         $template = $this->getTemplate();
         $paginator = $this->getPaginator();
@@ -130,52 +131,10 @@ class VisualPaginator extends Control implements ITemplatePath
             $this->paginatorRenderer = new BasicRenderer;
         }
         // use global options and rewrite with local options
-        $steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
-
-        $page = $paginator->getPage();
-
-        $fullStep = $this->options['fullStep'] ?? 10;
-        $firstPart = $this->options['firstPart'] ?? 5;
-        $lastPart = $this->options['lastPart'] ?? 5;
-        $middleStep = $this->options['middleStep'] ?? 2;
-        $middleFirstStep = $this->options['middleFirstStep'] ?? 3;
-        $middleLastStep = $this->options['middleLastStep'] ?? 3;
-
-        if ($paginator->getPageCount() <= $fullStep) {
-            $steps = range($paginator->getFirstPage(), $paginator->getLastPage());
-        } else {
-            if ($page <= $firstPart) {
-                // first part
-                $steps = range($paginator->getFirstPage(), $firstPart);
-                $steps[] = $paginator->getLastPage();
-            } else if ($page >= $firstPart && ($paginator->getLastPage() + 1) - $page > $lastPart) {
-                // middle part
-                $steps = range($paginator->getFirstPage(), $middleFirstStep);
-                $steps = array_merge($steps, range($page - $middleStep, $page + $middleStep));
-                $steps = array_merge($steps, range(($paginator->getLastPage() + 1) - $middleLastStep, $paginator->getLastPage()));
-            } else if ($paginator->getLastPage() - $page <= $lastPart) {
-                // last part
-                $steps[] = $paginator->getFirstPage();
-                $steps = array_merge($steps, range(($paginator->getLastPage() + 1) - $lastPart, $paginator->getLastPage()));
-            }
-        }
-
-//        if ($paginator->getPageCount() < 2) {
-//            $steps = array($page);
-//        } else {
-//            $arr = range(max($paginator->getFirstPage(), $page - 3), min($paginator->getLastPage(), $page + 3));
-//            $count = 4;
-//            $quotient = ($paginator->getPageCount() - 1) / $count;
-//            for ($i = 0; $i <= $count; $i++) {
-//                $arr[] = round($quotient * $i) + $paginator->getFirstPage();
-//            }
-//            sort($arr);
-//            $steps = array_values(array_unique($arr));
-//        }
-
-        $template->steps = $steps;
+        $template->steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
         $template->paginator = $paginator;
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $template->setTranslator($this->translator);
         $template->setFile($this->pathTemplate);
         $template->render();
@@ -186,7 +145,7 @@ class VisualPaginator extends Control implements ITemplatePath
      * Load state.
      *
      * @param array $params
-     * @throws \Nette\Application\BadRequestException
+     * @throws BadRequestException
      */
     public function loadState(array $params)
     {
