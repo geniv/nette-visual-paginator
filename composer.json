@@ -4,7 +4,7 @@
   "keywords": [
     "nette",
     "paginator",
-    "visualpaginator",
+    "visual paginator",
     "geniv"
   ],
   "license": "MIT",
@@ -15,9 +15,10 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
-    "nette/nette": ">=2.4.0",
-    "geniv/nette-general-form": ">=1.0.0"
+    "php": ">=7.0",
+    "nette/application": ">=2.4",
+    "nette/utils": ">=2.4",
+    "geniv/nette-general-form": ">=1.0"
   },
   "autoload": {
     "classmap": [

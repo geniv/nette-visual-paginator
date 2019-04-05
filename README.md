@@ -8,14 +8,15 @@ $ composer require geniv/nette-visual-paginator
 ```
 or
 ```json
-"geniv/nette-visual-paginator": ">=1.0.0"
+"geniv/nette-visual-paginator": "^1.0"
 ```
 
 require:
 ```json
-"php": ">=7.0.0",
-"nette/nette": ">=2.4.0",
-"geniv/nette-general-form": ">=1.0.0"
+"php": ">=7.0",
+"nette/application": ">=2.4",
+"nette/utils": ">=2.4",
+"geniv/nette-general-form": ">=1.0"
 ```
 
 Include in application
@@ -23,7 +24,19 @@ Include in application
 neon configure:
 ```neon
 services:
-    - VisualPaginator
+    - VisualPaginator\VisualPaginator
+```
+
+renderer (implements `IPaginatorRenderer`):
+```php
+BasicRenderer
+1 2 3 4 5 6 7 8 9 10
+
+AdvanceTypeARenderer(['relatedPages'=>3, 'count'=>4])
+1 2 3 4 ... 13 ... 26 ... 38 ... 50
+
+AdvanceTypeBRenderer(['part' => 3, 'middle' => 2])
+1 2 3 ... 48 49 50
 ```
 
 presenters:
@@ -51,6 +64,7 @@ public function render...()
 protected function createComponentVisualPaginator()
 {
     //$this->visualPaginator->setPathTemplate(__DIR__.'/VisualPaginator.latte');
+    $this->visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $this->visualPaginator;
 }
 ```
@@ -65,7 +79,7 @@ $vp = $this['VisualPaginator']->getPaginator();
 protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
 {
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
-    $visualPaginator->setOptions(['fullStep'=>10, 'firstPart'=>5, 'lastPart'=>5, 'middleStep'=>2, 'middleFirstStep'=>3, 'middleLastStep'=>3]);
+    $visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $visualPaginator;
 }
 ```
