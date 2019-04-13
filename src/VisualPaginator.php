@@ -16,6 +16,7 @@ use VisualPaginator\Renderer\IPaginatorRenderer;
  *
  * @author  geniv
  * @package VisualPaginator
+ * @method onSelectPage(VisualPaginator $paginator, $page)
  */
 class VisualPaginator extends Control implements ITemplatePath
 {
@@ -31,6 +32,8 @@ class VisualPaginator extends Control implements ITemplatePath
     private $options = [];
     /** @var IPaginatorRenderer */
     private $paginatorRenderer;
+    /** @var array */
+    public $onSelectPage;
 
 
     /**
@@ -105,6 +108,17 @@ class VisualPaginator extends Control implements ITemplatePath
     public function setOptions(array $options)
     {
         $this->options = $options;
+    }
+
+
+    /**
+     * Handle select page.
+     *
+     * @param $page
+     */
+    public function handleSelectPage($page)
+    {
+        $this->onSelectPage($this, $page);
     }
 
 

@@ -80,6 +80,13 @@ protected function createComponentVisualPaginator(VisualPaginator $visualPaginat
 {
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
     $visualPaginator->setPaginatorRenderer(new BasicRenderer);
+
+    $visualPaginator->onSelectPage[] = function ($component, $page) {
+        if ($this->isAjax()){
+            $this->redrawControl('grid');
+        }
+    };
+
     return $visualPaginator;
 }
 ```
