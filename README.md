@@ -1,6 +1,8 @@
 Visual paginator
 ================
 
+inspiration: https://github.com/iPublikuj/visual-paginator
+
 Installation
 ------------
 ```sh
