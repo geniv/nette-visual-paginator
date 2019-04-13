@@ -96,4 +96,13 @@ usage:
 {control visualPaginator}
 or
 {control visualPaginator, count=>200, perPage=>5}
+
+{* link for presenter: *}
+<a href="{plink this, 'page'=>$step}" n:class="$step==$paginator->getPage()?active, ajax">{$step}</a>
+
+{* link for component: *}
+<a n:href="this, 'page'=>$step" n:class="$step==$paginator->getPage()?active, ajax">{$step}</a>
+
+{* link for ajax: *}
+<a n:href="SelectPage!, 'page'=>$step" n:class="$step==$paginator->getPage()?active, ajax">{$step}</a>
 ```
