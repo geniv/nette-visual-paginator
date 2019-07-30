@@ -7,6 +7,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Paginator;
+use stdClass;
 use VisualPaginator\Renderer\BasicRenderer;
 use VisualPaginator\Renderer\IPaginatorRenderer;
 
@@ -16,7 +17,7 @@ use VisualPaginator\Renderer\IPaginatorRenderer;
  *
  * @author  geniv
  * @package VisualPaginator
- * @method onSelectPage(VisualPaginator $paginator, $page)
+ * @method onSelectPage(int $page)
  */
 class VisualPaginator extends Control implements ITemplatePath
 {
@@ -114,11 +115,11 @@ class VisualPaginator extends Control implements ITemplatePath
     /**
      * Handle select page.
      *
-     * @param $page
+     * @param int $page
      */
-    public function handleSelectPage($page)
+    public function handleSelectPage(int $page)
     {
-        $this->onSelectPage($this, $page);
+        $this->onSelectPage($page);
     }
 
 
@@ -145,6 +146,7 @@ class VisualPaginator extends Control implements ITemplatePath
             $this->paginatorRenderer = new BasicRenderer;
         }
         // use global options and rewrite with local options
+        /** @var stdClass $template */
         $template->steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
         $template->paginator = $paginator;
 
@@ -164,6 +166,9 @@ class VisualPaginator extends Control implements ITemplatePath
     public function loadState(array $params)
     {
         parent::loadState($params);
-        $this->getPaginator()->page = $this->page;
+
+        $page = $this->page;    // send to persistent parameter
+        $this->onSelectPage($page);
+        $this->getPaginator()->page = $page;
     }
 }

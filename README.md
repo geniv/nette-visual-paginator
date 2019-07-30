@@ -1,6 +1,8 @@
 Visual paginator
 ================
 
+inspiration: https://github.com/iPublikuj/visual-paginator
+
 Installation
 ------------
 ```sh
@@ -81,7 +83,7 @@ protected function createComponentVisualPaginator(VisualPaginator $visualPaginat
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
     $visualPaginator->setPaginatorRenderer(new BasicRenderer);
 
-    $visualPaginator->onSelectPage[] = function ($component, $page) {
+    $visualPaginator->onSelectPage[] = function (int $page) {
         if ($this->isAjax()){
             $this->redrawControl('grid');
         }
@@ -89,6 +91,11 @@ protected function createComponentVisualPaginator(VisualPaginator $visualPaginat
 
     return $visualPaginator;
 }
+```
+
+callback:
+```php
+onSelectPage(int $page)
 ```
 
 usage:
