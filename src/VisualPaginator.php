@@ -5,9 +5,9 @@ namespace VisualPaginator;
 use GeneralForm\ITemplatePath;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
+use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Paginator;
-use stdClass;
 use VisualPaginator\Renderer\BasicRenderer;
 use VisualPaginator\Renderer\IPaginatorRenderer;
 
@@ -129,7 +129,9 @@ class VisualPaginator extends Control implements ITemplatePath
      */
     public function render(array $options = [])
     {
+        /** @var Template $template */
         $template = $this->getTemplate();
+        $template->setParameters($options);
         $paginator = $this->getPaginator();
 
         if (isset($options['itemCount'])) {
@@ -144,11 +146,9 @@ class VisualPaginator extends Control implements ITemplatePath
             $this->paginatorRenderer = new BasicRenderer;
         }
         // use global options and rewrite with local options
-        /** @var stdClass $template */
-        $template->steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
-        $template->paginator = $paginator;
+        $template->add("steps", $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)));
+        $template->add("paginator", $paginator);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $template->setTranslator($this->translator);
         $template->setFile($this->pathTemplate);
         $template->render();
