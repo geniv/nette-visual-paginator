@@ -45,8 +45,6 @@ class VisualPaginator extends Control implements ITemplatePath
      */
     public function __construct(ITranslator $translator = null, IPaginatorRenderer $paginatorRenderer = null)
     {
-        parent::__construct();
-
         $this->translator = $translator;
         $this->paginatorRenderer = $paginatorRenderer;
         $this->pathTemplate = __DIR__ . '/VisualPaginator.latte';
@@ -163,7 +161,7 @@ class VisualPaginator extends Control implements ITemplatePath
      * @param array $params
      * @throws BadRequestException
      */
-    public function loadState(array $params)
+    public function loadState(array $params): void
     {
         parent::loadState($params);
 
