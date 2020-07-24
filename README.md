@@ -65,7 +65,7 @@ public function render...()
 ...
 protected function createComponentVisualPaginator()
 {
-    //$this->visualPaginator->setPathTemplate(__DIR__.'/VisualPaginator.latte');
+    //$this->visualPaginator->setTemplatePath(__DIR__.'/VisualPaginator.latte');
     $this->visualPaginator->setPaginatorRenderer(new BasicRenderer);
     return $this->visualPaginator;
 }
