@@ -131,7 +131,6 @@ class VisualPaginator extends Control implements ITemplatePath
     {
         /** @var Template $template */
         $template = $this->getTemplate();
-        $template->setParameters($options);
         $paginator = $this->getPaginator();
 
         if (isset($options['itemCount'])) {
@@ -146,8 +145,10 @@ class VisualPaginator extends Control implements ITemplatePath
             $this->paginatorRenderer = new BasicRenderer;
         }
         // use global options and rewrite with local options
-        $template->add("steps", $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)));
-        $template->add("paginator", $paginator);
+        $template->setParameters($options + [
+            "steps" => $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)),
+            "paginator" => $paginator
+        ]);
 
         $template->setTranslator($this->translator);
         $template->setFile($this->pathTemplate);
