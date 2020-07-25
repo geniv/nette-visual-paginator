@@ -66,10 +66,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set paginator renderer.
      *
      * @param IPaginatorRenderer $paginatorRenderer
+     * @return VisualPaginator
      */
     public function setPaginatorRenderer(IPaginatorRenderer $paginatorRenderer)
     {
         $this->paginatorRenderer = $paginatorRenderer;
+        return $this;
     }
 
 
@@ -92,10 +94,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set template path.
      *
      * @param string $path
+     * @return VisualPaginator
      */
     public function setTemplatePath(string $path)
     {
         $this->pathTemplate = $path;
+        return $this;
     }
 
 
@@ -103,10 +107,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set options.
      *
      * @param array $options
+     * @return VisualPaginator
      */
     public function setOptions(array $options)
     {
         $this->options = $options;
+        return $this;
     }
 
 

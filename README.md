@@ -1,7 +1,7 @@
 Visual paginator
 ================
 
-inspiration: https://github.com/iPublikuj/visual-paginator
+inspiration: <https://github.com/iPublikuj/visual-paginator>
 
 Installation
 ------------
@@ -15,9 +15,9 @@ or
 
 require:
 ```json
-"php": ">=7.0",
-"nette/application": ">=2.4",
-"nette/utils": ">=2.4",
+"php": ">=7.1",
+"nette/application": "^3.0",
+"nette/utils": "^3.1",
 "geniv/nette-general-form": ">=1.0"
 ```
 
@@ -26,7 +26,7 @@ Include in application
 neon configure:
 ```neon
 services:
-    - VisualPaginator\VisualPaginator
+    - VisualPaginator\VisualPaginatorFactory
 ```
 
 renderer (implements `IPaginatorRenderer`):
@@ -43,16 +43,17 @@ AdvanceTypeBRenderer(['part' => 3, 'middle' => 2])
 
 presenters:
 ```php
-/** @var VisualPaginator @inject */
+/** @var \VisualPaginator\VisualPaginatorFactory @inject */
 public $visualPaginator;
-...
+
 public function render...()
+{
     // for dibi
     $items = $this->model->getList();
 
     $items = range(1, 150);
 
-    $vp = $this->visualPaginator->getPaginator();
+    $vp = $this->getComponent("visualPaginator")->getPaginator();
     $vp->setItemCount(count($items))
         ->setItemsPerPage(5);
 
@@ -62,12 +63,13 @@ public function render...()
     // for array
     $this->template->items = array_slice($items, $vp->getOffset(), $vp->getLength())
 }
-...
+
 protected function createComponentVisualPaginator()
 {
-    //$this->visualPaginator->setTemplatePath(__DIR__.'/VisualPaginator.latte');
-    $this->visualPaginator->setPaginatorRenderer(new BasicRenderer);
-    return $this->visualPaginator;
+    $component = $this->visualPaginator->create();
+    //$component->setTemplatePath(__DIR__.'/VisualPaginator.latte');
+    $component->setPaginatorRenderer(new BasicRenderer);
+    return $component;
 }
 ```
 
