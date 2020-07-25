@@ -12,12 +12,15 @@
     {
       "name": "Radek Fryšták",
       "email": "geniv.radek@gmail.com"
+    },
+    {
+      "name": "Jan Hermann"
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "nette/application": ">=2.4",
-    "nette/utils": ">=2.4",
+    "php": ">=7.1",
+    "nette/application": ">=3.0",
+    "nette/utils": ">=3.0",
     "geniv/nette-general-form": ">=1.0"
   },
   "autoload": {

@@ -5,9 +5,9 @@ namespace VisualPaginator;
 use GeneralForm\ITemplatePath;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
+use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Paginator;
-use stdClass;
 use VisualPaginator\Renderer\BasicRenderer;
 use VisualPaginator\Renderer\IPaginatorRenderer;
 
@@ -16,6 +16,7 @@ use VisualPaginator\Renderer\IPaginatorRenderer;
  * Class VisualPaginator
  *
  * @author  geniv
+ * @author  hermajan
  * @package VisualPaginator
  * @method onSelectPage(int $page)
  */
@@ -45,8 +46,6 @@ class VisualPaginator extends Control implements ITemplatePath
      */
     public function __construct(ITranslator $translator = null, IPaginatorRenderer $paginatorRenderer = null)
     {
-        parent::__construct();
-
         $this->translator = $translator;
         $this->paginatorRenderer = $paginatorRenderer;
         $this->pathTemplate = __DIR__ . '/VisualPaginator.latte';
@@ -68,10 +67,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set paginator renderer.
      *
      * @param IPaginatorRenderer $paginatorRenderer
+     * @return VisualPaginator
      */
     public function setPaginatorRenderer(IPaginatorRenderer $paginatorRenderer)
     {
         $this->paginatorRenderer = $paginatorRenderer;
+        return $this;
     }
 
 
@@ -94,10 +95,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set template path.
      *
      * @param string $path
+     * @return VisualPaginator
      */
     public function setTemplatePath(string $path)
     {
         $this->pathTemplate = $path;
+        return $this;
     }
 
 
@@ -105,10 +108,12 @@ class VisualPaginator extends Control implements ITemplatePath
      * Set options.
      *
      * @param array $options
+     * @return VisualPaginator
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): VisualPaginator
     {
         $this->options = $options;
+        return $this;
     }
 
 
@@ -117,7 +122,7 @@ class VisualPaginator extends Control implements ITemplatePath
      *
      * @param int $page
      */
-    public function handleSelectPage(int $page)
+    public function handleSelectPage(int $page): void
     {
         $this->onSelectPage($page);
     }
@@ -127,10 +132,10 @@ class VisualPaginator extends Control implements ITemplatePath
      * Render.
      *
      * @param array $options
-     * @return void
      */
-    public function render(array $options = [])
+    public function render(array $options = []): void
     {
+        /** @var Template $template */
         $template = $this->getTemplate();
         $paginator = $this->getPaginator();
 
@@ -146,11 +151,11 @@ class VisualPaginator extends Control implements ITemplatePath
             $this->paginatorRenderer = new BasicRenderer;
         }
         // use global options and rewrite with local options
-        /** @var stdClass $template */
-        $template->steps = $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options));
-        $template->paginator = $paginator;
+        $template->setParameters($options + [
+                "steps"     => $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)),
+                "paginator" => $paginator,
+            ]);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $template->setTranslator($this->translator);
         $template->setFile($this->pathTemplate);
         $template->render();
@@ -163,7 +168,7 @@ class VisualPaginator extends Control implements ITemplatePath
      * @param array $params
      * @throws BadRequestException
      */
-    public function loadState(array $params)
+    public function loadState(array $params): void
     {
         parent::loadState($params);
 

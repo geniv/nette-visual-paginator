@@ -49,7 +49,6 @@ class AdvanceTypeARenderer implements IPaginatorRenderer
             $arr[] = round($quotient * $i) + $paginator->firstPage;
         }
         sort($arr);
-        $steps = array_values(array_unique($arr));
-        return $steps;
+        return array_values(array_unique($arr));
     }
 }
