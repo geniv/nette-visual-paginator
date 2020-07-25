@@ -10,14 +10,14 @@ $ composer require geniv/nette-visual-paginator
 ```
 or
 ```json
-"geniv/nette-visual-paginator": "^1.1"
+"geniv/nette-visual-paginator": "^2.0"
 ```
 
 require:
 ```json
 "php": ">=7.1",
-"nette/application": "^3.0",
-"nette/utils": "^3.1",
+"nette/application": ">=3.0",
+"nette/utils": ">=3.0",
 "geniv/nette-general-form": ">=1.0"
 ```
 
@@ -53,7 +53,7 @@ public function render...()
 
     $items = range(1, 150);
 
-    $vp = $this->getComponent("visualPaginator")->getPaginator();
+    $vp = $this->getComponent('visualPaginator')->getPaginator();
     $vp->setItemCount(count($items))
         ->setItemsPerPage(5);
 
@@ -80,8 +80,9 @@ $vp = $this['VisualPaginator']->getPaginator();
 
 ...
 
-protected function createComponentVisualPaginator(VisualPaginator $visualPaginator): VisualPaginator
+protected function createComponentVisualPaginator(\VisualPaginator\VisualPaginatorFactory $factory): VisualPaginator
 {
+    $visualPaginator = $factory->create();
     //$visualPaginator->setTemplatePath(__DIR__.'/templates/visualPaginator.latte');
     $visualPaginator->setPaginatorRenderer(new BasicRenderer);
 
