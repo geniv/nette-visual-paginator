@@ -3,11 +3,16 @@
 namespace VisualPaginator;
 
 /**
- * Class VisualPaginatorFactory
+ * Interface VisualPaginatorFactory
  *
+ * @author  hermajan
+ * @author  geniv
  * @package VisualPaginator
  */
 interface VisualPaginatorFactory
 {
+    /**
+     * @return VisualPaginator
+     */
     public function create(): VisualPaginator;
 }
