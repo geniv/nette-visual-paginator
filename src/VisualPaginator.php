@@ -16,6 +16,7 @@ use VisualPaginator\Renderer\IPaginatorRenderer;
  * Class VisualPaginator
  *
  * @author  geniv
+ * @author  hermajan
  * @package VisualPaginator
  * @method onSelectPage(int $page)
  */
@@ -109,7 +110,7 @@ class VisualPaginator extends Control implements ITemplatePath
      * @param array $options
      * @return VisualPaginator
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): VisualPaginator
     {
         $this->options = $options;
         return $this;
@@ -121,7 +122,7 @@ class VisualPaginator extends Control implements ITemplatePath
      *
      * @param int $page
      */
-    public function handleSelectPage(int $page)
+    public function handleSelectPage(int $page): void
     {
         $this->onSelectPage($page);
     }
@@ -131,9 +132,8 @@ class VisualPaginator extends Control implements ITemplatePath
      * Render.
      *
      * @param array $options
-     * @return void
      */
-    public function render(array $options = [])
+    public function render(array $options = []): void
     {
         /** @var Template $template */
         $template = $this->getTemplate();
@@ -152,9 +152,9 @@ class VisualPaginator extends Control implements ITemplatePath
         }
         // use global options and rewrite with local options
         $template->setParameters($options + [
-            "steps" => $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)),
-            "paginator" => $paginator
-        ]);
+                "steps"     => $this->paginatorRenderer->getSteps($paginator, array_merge($this->options, $options)),
+                "paginator" => $paginator,
+            ]);
 
         $template->setTranslator($this->translator);
         $template->setFile($this->pathTemplate);
